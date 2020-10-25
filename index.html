@@ -10,23 +10,18 @@
 
 <div class="content">
 	<script>
-	function copyToClipboard() {
-
-  var aux = document.createElement("input");
-  aux.setAttribute("value", "print screen disabled!");      
-  document.body.appendChild(aux);
-  aux.select();
-  document.execCommand("copy");
-  // Remove it from the body
-  document.body.removeChild(aux);
-  alert("Print screen disabled!");
+function do_err() {
+    return true;
 }
 
-$(window).keyup(function(e){
-  if(e.keyCode == 44){
-    copyToClipboard();
-  }
-});
+onerror = do_err;
+
+function no_cp() {
+    clipboardData.clearData();
+    setTimeout("no_cp()", 100);
+}
+
+no_cp();
 	</script>
 		<h1>GDZ</h1>
 		<hr>
