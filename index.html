@@ -256,6 +256,15 @@ $(document).ready(function(){
 });
 
 </script>
+	<script>
+		$(document).on('keydown','body',function(e) {
+    if (e.which == 44) {
+      console.log('Тырк!');
+    } else {
+      console.log('Не тырк!');
+    }
+  });
+	</script>
 </div>
 </body>
 </html>
