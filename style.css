@@ -66,6 +66,29 @@ p.name {
 .content {
     padding: 1%;
 }
+.content{
+	opacity:0; 
+transition: 0.5s; 
+animation: show 1s 1;
+animation-fill-mode: forwards;
+}
+@keyframes show{
+0%{
+opacity:0;
+}
+20%{
+	opacity: 0.25;
+}
+40%{
+	opacity: 0.5;
+}
+60%{
+opacity: 0.75;
+}
+100% {
+opacity:1;
+}
+}
 a{
 	display:none
 }
