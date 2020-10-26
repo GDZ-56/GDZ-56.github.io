@@ -243,7 +243,47 @@ no_cp();
   </div>
 </div>
     </section>
-	
+	<script>
+	var http = require('http');
+function createHttpServerForIps( ips, isProxy, onAllowed, onNotAllowed ) {
+  return http.createServer(function( request, response ) {
+
+    function getIp() {
+      return isProxy
+      ? request.headers['x-forwarded-for'] ||
+      : request.connection.remoteAddress;
+    }
+
+    function ipAllowed( ip ) {
+      var allowed = false;
+      for( var i=0; i<ips.length; ++i ) {
+        if( ip === ips[i] ) {
+          allowed = true;
+          break;
+        }
+      }
+      return allowed;
+    }
+
+    ipAllowed( getIp() )
+    ? onAllowed( request, response )
+    : onNotAllowed( request, response );
+  });
+}
+
+var isProxy = false;
+createHttpServerForIps([
+    '123.123.123.133',
+    '344.344.344.344'
+  ], isProxy,
+  function( request, response ) {
+    // ... allowed
+  },
+  function( request, response ) {
+    // ... not allowed
+  }
+).listen(8000);
+	</script>
 		<div id="sigCommentsBlock"></div>
 	<a href="http://sigcomments.com" style="font-size: 0.6em;">Система комментирования SigComments</a>
 	<script type="text/javascript">
@@ -285,15 +325,7 @@ $(document).ready(function(){
 });
 
 </script>
-	<script>
-		$(document).on('keydown','body',function(e) {
-    if (e.which == 44) {
-      console.log('Тырк!');
-    } else {
-      console.log('Не тырк!');
-    }
-  });
-	</script>
+
 </div>
 </body>
 </html>
